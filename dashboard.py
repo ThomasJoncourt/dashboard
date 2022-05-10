@@ -1,11 +1,9 @@
-from turtle import color, title
 import streamlit as st
 import pandas as pd
 from sklearn.datasets import fetch_california_housing
 import requests
 import plotly.express as px
 import matplotlib.pyplot as plt
-import numpy as np
 
 cal_housing = fetch_california_housing()
 X, y = cal_housing.data, cal_housing.target
