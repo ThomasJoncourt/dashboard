@@ -51,10 +51,10 @@ with st.form("my_form"):
     AveOccup = st.number_input('Insert : Average number of household members',min_value=0.0)
     st.write('Average number of household members is ', AveOccup)
 
-    Latitude = st.number_input('Insert : Block group latitude',min_value=30.0,max_value=45.0,value=35)
+    Latitude = st.number_input('Insert : Block group latitude',min_value=30.0,max_value=45.0,value=35.0)
     st.write('Block group latitude is ', Latitude)
 
-    Longitude = st.number_input('Insert : Block group longitude',min_value=-130.0,max_value=-110.0,value=-119)
+    Longitude = st.number_input('Insert : Block group longitude',min_value=-130.0,max_value=-110.0,value=-119.0)
     st.write('Block group longitude is ', Longitude)
 
     submitted = st.form_submit_button("Submit")
