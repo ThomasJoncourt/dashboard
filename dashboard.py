@@ -4,6 +4,9 @@ from sklearn.datasets import fetch_california_housing
 import requests
 import plotly.express as px
 import matplotlib.pyplot as plt
+from joblib import load
+
+reg_loaded = load('HistGradientBoostingRegressor_saved.joblib')
 
 cal_housing = fetch_california_housing()
 X, y = cal_housing.data, cal_housing.target
@@ -12,6 +15,7 @@ names = cal_housing.feature_names
 st.title('Prix médian des maisons en Californie par quartiers')
 
 df = pd.DataFrame(X,columns=['MedInc','HouseAge','AveRooms','AveBedrms','Population','AveOccup','Latitude','Longitude'])
+
 df["Prix median en $"] = y *100000
 
 token = "pk.eyJ1IjoidGhvbWFzamN0IiwiYSI6ImNsMnN6NnVkYzAzbDczaWxya28xMTI5aW0ifQ.zFr4fMzbO2iMmBeAydU4Mg"
@@ -56,26 +60,12 @@ with st.form("my_form"):
 
     if submitted:
         st.write("Félicitation vous avez bien rempli le formulaire")
-        col=["MedInc", "HouseAge" ,"AveRooms","AveBedrms","Population" ,"AveOccup" ,"Latitude","Longitude"]
-        X_te=pd.DataFrame([(MedInc, HouseAge ,AveRooms,AveBedrms,Population ,AveOccup ,Latitude,Longitude)], columns=col )
-        headers = {'Content-Type': 'application/json'}
-        url = 'http://127.0.0.1:5000/invocations'
-        data = X_te.to_json(orient='split')
-        response = requests.post(url,headers=headers, data=data)
-        responseJson = response.json()
-        pred = round(responseJson[0]*100000,0)
+        pred = reg_loaded.predict(np.array([MedInc, HouseAge ,AveRooms,AveBedrms,Population ,AveOccup ,Latitude,Longitude]).reshape(1, -1))[0] * 100000
         st.write("Price Prédiction : ",pred," $")
         f = plt.figure()
         plt.hist(x=df["Prix median en $"])
         plt.plot([pred,pred],[0,5000],color="red")
         plt.show()
         st.plotly_chart(f, use_container_width=True)
-
-# streamlit run dashboard.py
-
-
-
-
-
-
-
+        
+  
