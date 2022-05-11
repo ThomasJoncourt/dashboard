@@ -68,5 +68,8 @@ with st.form("my_form"):
         plt.plot([pred,pred],[0,5000],color="red")
         plt.show()
         st.plotly_chart(f, use_container_width=True)
+        fig=px.scatter_mapbox(pd.DataFrame({"lat":[Latitude],"lon":[Longitude]}),lat="lat", lon="lon", zoom=5,center=dict(lat=36.95, lon=-120))
+        fig.update_layout(mapbox_style="dark", mapbox_accesstoken=token)
+        st.plotly_chart(fig, use_container_width=True)
         
   
