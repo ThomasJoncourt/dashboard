@@ -5,6 +5,7 @@ import requests
 import plotly.express as px
 import matplotlib.pyplot as plt
 from joblib import load
+import numpy as np
 
 reg_loaded = load('HistGradientBoostingRegressor_saved.joblib')
 
